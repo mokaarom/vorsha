@@ -1,0 +1,118 @@
+{
+  "app_name": "Vorosha",
+  "app_tagline": "Speak your way to government services",
+  "common": {
+    "continue": "Continue",
+    "back": "Back",
+    "submit": "Submit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "delete": "Delete",
+    "retry": "Retry",
+    "loading": "Please wait",
+    "search": "Search",
+    "see_all": "See all",
+    "done": "Done",
+    "close": "Close",
+    "offline_mode": "Offline · No connection",
+    "offline_desc": "Request saved · Will sync when online"
+  },
+  "nav": {
+    "home": "Home",
+    "voice": "Voice",
+    "forms": "Forms",
+    "report": "Report",
+    "legislation": "Laws",
+    "profile": "Profile"
+  },
+  "auth": {
+    "welcome_title": "Welcome to Vorosha",
+    "welcome_subtitle": "Ask about government services, forms, and bylaws in Bangla or English",
+    "phone_label": "Mobile number",
+    "phone_placeholder": "01XXXXXXXXX",
+    "send_otp": "Send OTP",
+    "otp_title": "Verification code",
+    "otp_subtitle": "A 4-digit code was sent to your phone",
+    "verify_otp": "Verify code",
+    "resend_otp": "Resend code",
+    "nid_optional": "National ID (optional)",
+    "login_button": "Log in",
+    "register_button": "Complete registration",
+    "language_select": "Choose language"
+  },
+  "home": {
+    "greeting": "Help with government services",
+    "how_can_i_help": "Ask about trade licenses, birth registration, or local bylaws",
+    "tap_to_speak": "Tap to speak",
+    "quick_services": "Quick services",
+    "recent_queries": "Recent queries",
+    "services": {
+      "trade_license": "Trade license",
+      "birth_certificate": "Birth registration",
+      "land_mutation": "Land mutation",
+      "social_allowance": "Social allowance",
+      "utility_issue": "Utilities",
+      "road_repair": "Road repair"
+    }
+  },
+  "voice": {
+    "listening": "Listening",
+    "processing": "Searching bylaws",
+    "speaking": "Answering",
+    "tap_to_stop": "Tap to stop",
+    "tap_to_start": "Tap to speak",
+    "fallback_input": "Type a question",
+    "citation_label": "Sources",
+    "ask_followup": "Ask a follow-up"
+  },
+  "forms": {
+    "title": "Form assistant",
+    "subtitle": "Step-by-step voice-guided government forms",
+    "search_forms": "Search forms",
+    "progress": "Completed",
+    "step": "Step",
+    "voice_fill_prompt": "Speak to fill",
+    "download_pdf": "Download PDF",
+    "save_draft": "Save draft",
+    "validation_error": "Invalid input",
+    "validation_success": "Valid"
+  },
+  "report": {
+    "title": "Report an issue",
+    "subtitle": "Photograph road damage, waste, or utility hazards",
+    "take_photo": "Take photo",
+    "choose_photo": "Choose from gallery",
+    "category": "Category",
+    "location": "Location",
+    "description": "Description",
+    "severity": "Severity",
+    "submit_report": "Submit report",
+    "track_title": "Your reports",
+    "status_reported": "Submitted",
+    "status_review": "Under review",
+    "status_resolved": "Resolved"
+  },
+  "legislation": {
+    "title": "Laws & bylaws",
+    "subtitle": "Plain-language summaries of government acts",
+    "reading_level": "Reading level",
+    "level_basic": "Basic",
+    "level_intermediate": "Detailed",
+    "level_advanced": "Gazette text",
+    "read_more": "Full legislation"
+  },
+  "profile": {
+    "title": "Citizen profile",
+    "nid_verified": "NID verified",
+    "nid_unverified": "NID not verified",
+    "verify_now": "Verify NID",
+    "language": "Language",
+    "dark_mode": "Dark mode",
+    "voice_speed": "Speech speed",
+    "privacy": "Privacy & data protection",
+    "logout": "Log out",
+    "delete_account": "Delete account"
+  }
+}

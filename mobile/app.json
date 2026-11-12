@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "Vorosha - ভরসা",
+    "slug": "vorosha",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "vorosha",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1A5276"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "gov.bd.vorosha",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Vorosha needs access to your microphone for voice queries and assistance.",
+        "NSCameraUsageDescription": "Vorosha needs access to your camera to capture infrastructure issues.",
+        "NSLocationWhenInUseUsageDescription": "Vorosha needs your location to geo-tag infrastructure reports.",
+        "NSPhotoLibraryUsageDescription": "Vorosha needs access to your photo library to upload issue photos."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#1A5276"
+      },
+      "package": "gov.bd.vorosha",
+      "permissions": [
+        "RECORD_AUDIO",
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Mont-ExtraLight.otf",
+            "./assets/fonts/Mont-Heavy.otf"
+          ]
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

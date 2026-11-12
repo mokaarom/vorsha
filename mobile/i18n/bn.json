@@ -1,0 +1,118 @@
+{
+  "app_name": "ভরসা",
+  "app_tagline": "সরকারি সেবায় কথা বলে পথ",
+  "common": {
+    "continue": "পরবর্তী",
+    "back": "পূর্ববর্তী",
+    "submit": "জমা দিন",
+    "save": "সংরক্ষণ",
+    "cancel": "বাতিল",
+    "confirm": "নিশ্চিত",
+    "edit": "সম্পাদনা",
+    "delete": "মুছুন",
+    "retry": "আবার চেষ্টা",
+    "loading": "অপেক্ষা করুন",
+    "search": "খুঁজুন",
+    "see_all": "সব দেখুন",
+    "done": "সম্পন্ন",
+    "close": "বন্ধ",
+    "offline_mode": "অফলাইন · সংযোগ নেই",
+    "offline_desc": "অনুরোধ সংরক্ষিত · অনলাইনে সিঙ্ক হবে"
+  },
+  "nav": {
+    "home": "হোম",
+    "voice": "ভয়েস",
+    "forms": "ফরম",
+    "report": "অভিযোগ",
+    "legislation": "আইন",
+    "profile": "প্রোফাইল"
+  },
+  "auth": {
+    "welcome_title": "ভরসায় স্বাগতম",
+    "welcome_subtitle": "বাংলায় কথা বলে সরকারি তথ্য, ফরম ও সেবার পথ জানুন",
+    "phone_label": "মোবাইল নম্বর",
+    "phone_placeholder": "০১XXXXXXXXX",
+    "send_otp": "ওটিপি পাঠান",
+    "otp_title": "যাচাইকরণ কোড",
+    "otp_subtitle": "আপনার নম্বরে ৪-সংখ্যার কোড পাঠানো হয়েছে",
+    "verify_otp": "কোড যাচাই",
+    "resend_otp": "পুনরায় কোড পাঠান",
+    "nid_optional": "জাতীয় পরিচয়পত্র (ঐচ্ছিক)",
+    "login_button": "প্রবেশ করুন",
+    "register_button": "নিবন্ধন সম্পন্ন",
+    "language_select": "ভাষা নির্বাচন"
+  },
+  "home": {
+    "greeting": "সরকারি সেবায় সাহায্য",
+    "how_can_i_help": "ট্রেড লাইসেন্স, জন্ম নিবন্ধন বা স্থানীয় বিধি সম্পর্কে জিজ্ঞাসা করুন",
+    "tap_to_speak": "কথা বলতে চাপুন",
+    "quick_services": "দ্রুত সেবা",
+    "recent_queries": "সাম্প্রতিক জিজ্ঞাসা",
+    "services": {
+      "trade_license": "ট্রেড লাইসেন্স",
+      "birth_certificate": "জন্ম নিবন্ধন",
+      "land_mutation": "নামজারি",
+      "social_allowance": "সামাজিক ভাতা",
+      "utility_issue": "বিদ্যুৎ ও পানি",
+      "road_repair": "রাস্তা মেরামত"
+    }
+  },
+  "voice": {
+    "listening": "শুনছি",
+    "processing": "তথ্য খোঁজা হচ্ছে",
+    "speaking": "উত্তর দিচ্ছি",
+    "tap_to_stop": "থামাতে চাপুন",
+    "tap_to_start": "কথা বলুন",
+    "fallback_input": "লিখে প্রশ্ন করুন",
+    "citation_label": "সূত্র",
+    "ask_followup": "আরও জানতে প্রশ্ন করুন"
+  },
+  "forms": {
+    "title": "ফরম সহকারী",
+    "subtitle": "ধাপে ধাপে ভয়েসে সরকারি ফরম পূরণ",
+    "search_forms": "ফরম খুঁজুন",
+    "progress": "সম্পন্ন",
+    "step": "ধাপ",
+    "voice_fill_prompt": "বলুন, আমি লিখছি",
+    "download_pdf": "পিডিএফ ডাউনলোড",
+    "save_draft": "খসড়া সংরক্ষণ",
+    "validation_error": "তথ্যটি সঠিক নয়",
+    "validation_success": "সঠিক হয়েছে"
+  },
+  "report": {
+    "title": "সমস্যা রিপোর্ট",
+    "subtitle": "ছবি তুলে রাস্তা, বর্জ্য বা বিদ্যুৎ সমস্যা জানান",
+    "take_photo": "ছবি তুলুন",
+    "choose_photo": "গ্যালারি থেকে",
+    "category": "সমস্যার ধরন",
+    "location": "স্থান",
+    "description": "বর্ণনা",
+    "severity": "গুরুত্ব",
+    "submit_report": "অভিযোগ দাখিল",
+    "track_title": "দাখিলকৃত অভিযোগ",
+    "status_reported": "দাখিল হয়েছে",
+    "status_review": "যাচাই চলছে",
+    "status_resolved": "সমাধান হয়েছে"
+  },
+  "legislation": {
+    "title": "আইন ও বিধিমালা",
+    "subtitle": "সরকারি আইন সহজ বাংলায়",
+    "reading_level": "পঠন স্তর",
+    "level_basic": "সহজ সার",
+    "level_intermediate": "বিস্তারিত",
+    "level_advanced": "মূল ধারা",
+    "read_more": "সম্পূর্ণ আইন"
+  },
+  "profile": {
+    "title": "নাগরিক পরিচিতি",
+    "nid_verified": "NID যাচাইকৃত",
+    "nid_unverified": "NID যাচাই হয়নি",
+    "verify_now": "যাচাই করুন",
+    "language": "ভাষা",
+    "dark_mode": "ডার্ক মোড",
+    "voice_speed": "ভয়েস গতি",
+    "privacy": "গোপনীয়তা ও ডেটা সুরক্ষা",
+    "logout": "লগআউট",
+    "delete_account": "অ্যাকাউন্ট মুছুন"
+  }
+}

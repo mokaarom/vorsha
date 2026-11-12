@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@import "uniwind";
+@import "heroui-native/styles";
+
+@source "./node_modules/heroui-native/lib";
+
+@theme {
+  --radius: 0.5rem;
+  --field-radius: calc(var(--radius) * 1.5);
+  --border-width: 1px;
+  --field-border-width: 1px;
+  --opacity-disabled: 0.5;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      /* Ink-tinted Civic Neutral Ramp (Light) */
+      --background: oklch(0.973 0.004 247.9);
+      --foreground: oklch(0.185 0.018 252.4);
+
+      --surface: oklch(1 0 0);
+      --surface-foreground: oklch(0.185 0.018 252.4);
+
+      --surface-secondary: oklch(0.952 0.006 247.9);
+      --surface-secondary-foreground: oklch(0.185 0.018 252.4);
+
+      --surface-tertiary: oklch(0.928 0.008 247.9);
+      --surface-tertiary-foreground: oklch(0.185 0.018 252.4);
+
+      --overlay: oklch(1 0 0);
+      --overlay-foreground: oklch(0.185 0.018 252.4);
+      --backdrop: oklch(0% 0 0 / 24%);
+
+      --muted: oklch(0.51 0.018 250.2);
+
+      --default: oklch(0.942 0.006 247.9);
+      --default-foreground: oklch(0.185 0.018 252.4);
+
+      /* Single Civic Blue Accent (#1A5276) */
+      --accent: oklch(0.418 0.088 242.5);
+      --accent-foreground: oklch(0.991 0 0);
+
+      /* Form Field Tokens */
+      --field-background: oklch(1 0 0);
+      --field-foreground: oklch(0.185 0.018 252.4);
+      --field-placeholder: oklch(0.51 0.018 250.2);
+      --field-border: oklch(0.895 0.008 247.9);
+
+      /* Semantic Status Tokens */
+      --success: oklch(0.627 0.165 149.2);
+      --success-foreground: oklch(0.991 0 0);
+
+      --warning: oklch(0.768 0.152 74.5);
+      --warning-foreground: oklch(0.185 0.018 252.4);
+
+      --danger: oklch(0.577 0.215 27.3);
+      --danger-foreground: oklch(0.991 0 0);
+
+      --segment: oklch(1 0 0);
+      --segment-foreground: oklch(0.185 0.018 252.4);
+
+      --border: oklch(0.895 0.008 247.9);
+      --separator: oklch(0.865 0.008 247.9);
+      --focus: var(--accent);
+      --link: var(--accent);
+
+      --surface-shadow: 0 1px 2px 0 rgba(17, 24, 39, 0.05);
+      --overlay-shadow: 0 8px 24px 0 rgba(17, 24, 39, 0.08);
+      --field-shadow: 0 1px 2px 0 rgba(17, 24, 39, 0.03);
+    }
+
+    @variant dark {
+      /* Ink-tinted Civic Neutral Ramp (Dark) */
+      --background: oklch(0.155 0.012 255.1);
+      --foreground: oklch(0.955 0.006 247.9);
+
+      --surface: oklch(0.195 0.014 254.3);
+      --surface-foreground: oklch(0.955 0.006 247.9);
+
+      --surface-secondary: oklch(0.235 0.016 253.8);
+      --surface-secondary-foreground: oklch(0.955 0.006 247.9);
+
+      --surface-tertiary: oklch(0.268 0.016 253.8);
+      --surface-tertiary-foreground: oklch(0.955 0.006 247.9);
+
+      --overlay: oklch(0.215 0.015 254.3);
+      --overlay-foreground: oklch(0.955 0.006 247.9);
+      --backdrop: oklch(0% 0 0 / 45%);
+
+      --muted: oklch(0.665 0.016 250.2);
+
+      --default: oklch(0.255 0.016 253.8);
+      --default-foreground: oklch(0.955 0.006 247.9);
+
+      /* Civic Blue Accent for Dark Mode (#3882B8) */
+      --accent: oklch(0.615 0.115 242.5);
+      --accent-foreground: oklch(0.991 0 0);
+
+      /* Form Field Tokens */
+      --field-background: oklch(0.235 0.016 253.8);
+      --field-foreground: oklch(0.955 0.006 247.9);
+      --field-placeholder: oklch(0.665 0.016 250.2);
+      --field-border: oklch(0.285 0.014 253.8);
+
+      /* Semantic Status Tokens */
+      --success: oklch(0.725 0.155 152.4);
+      --success-foreground: oklch(0.155 0.012 255.1);
+
+      --warning: oklch(0.81 0.138 76.3);
+      --warning-foreground: oklch(0.155 0.012 255.1);
+
+      --danger: oklch(0.635 0.195 25.4);
+      --danger-foreground: oklch(0.991 0 0);
+
+      --segment: oklch(0.268 0.016 253.8);
+      --segment-foreground: oklch(0.955 0.006 247.9);
+
+      --border: oklch(0.275 0.014 253.8);
+      --separator: oklch(0.315 0.014 253.8);
+      --focus: var(--accent);
+      --link: var(--accent);
+
+      --surface-shadow: 0 0 0 0 transparent inset;
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+      --field-shadow: 0 0 0 0 transparent inset;
+    }
+  }
+}
