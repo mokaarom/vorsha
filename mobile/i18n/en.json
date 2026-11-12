@@ -25,7 +25,30 @@
     "forms": "Forms",
     "report": "Report",
     "legislation": "Laws",
-    "profile": "Profile"
+    "profile": "Profile",
+    "open_menu": "Open menu",
+    "menu": "Menu",
+    "conversation": "Conversation",
+    "review": "Review",
+    "issue": "Issue"
+  },
+  "composer": {
+    "placeholder": "Ask anything",
+    "attach": "Report an issue with a photo",
+    "language": "Switch language",
+    "dictate": "Dictate",
+    "send": "Send",
+    "live": "Start live voice"
+  },
+  "live": {
+    "title": "Vorosha Live",
+    "idle": "Tap the mic to speak",
+    "listening": "Go ahead, I'm listening",
+    "processing": "Searching the bylaws",
+    "speaking": "Answering",
+    "error": "Microphone unavailable. Allow access and try again.",
+    "keyboard": "Type instead",
+    "close": "End live voice"
   },
   "auth": {
     "welcome_title": "Welcome to Vorosha",
@@ -44,6 +67,7 @@
   },
   "home": {
     "greeting": "Help with government services",
+    "hero_title": "How can I help you today?",
     "how_can_i_help": "Ask about trade licenses, birth registration, or local bylaws",
     "tap_to_speak": "Tap to speak",
     "quick_services": "Quick services",

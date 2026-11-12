@@ -1,30 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import { Button, Typography, useThemeColor } from 'heroui-native';
-import { Spacing, BorderRadius } from '../../constants/theme';
-import { LanguageToggle } from '../../components/common/LanguageToggle';
-import { useSettingsStore } from '../../store/settingsStore';
 import { Mic, FileCheck, ShieldCheck } from 'lucide-react-native';
+import { OnShader } from '../../constants/colors';
+import { BorderRadius, Spacing, TouchTargets } from '../../constants/theme';
+import { LanguageToggle } from '../../components/common/LanguageToggle';
+import { Screen } from '../../components/common/Screen';
+import { VoiceOrb } from '../../components/voice/VoiceOrb';
+import { useSettingsStore } from '../../store/settingsStore';
 
 export default function OnboardingScreen() {
   const { t } = useTranslation();
   const router = useRouter();
+  const { width } = useWindowDimensions();
   const language = useSettingsStore((s) => s.language);
-  const [background, accent, success, muted, surfaceSecondary] = useThemeColor([
-    'background',
-    'accent',
-    'success',
-    'muted',
-    'surface-secondary',
-  ]) as string[];
 
   const features = [
     {
       icon: Mic,
-      color: accent,
       title: language === 'bn' ? 'ভয়েস ফার্স্ট' : 'Voice first',
       desc:
         language === 'bn'
@@ -33,7 +35,6 @@ export default function OnboardingScreen() {
     },
     {
       icon: FileCheck,
-      color: success,
       title: language === 'bn' ? 'সরকারি বিধিমালা' : 'Grounded in law',
       desc:
         language === 'bn'
@@ -42,7 +43,6 @@ export default function OnboardingScreen() {
     },
     {
       icon: ShieldCheck,
-      color: muted,
       title: language === 'bn' ? 'ডেটা সুরক্ষা' : 'Data stays local',
       desc:
         language === 'bn'
@@ -52,100 +52,110 @@ export default function OnboardingScreen() {
   ];
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
-      <View style={styles.topBar}>
-        <LanguageToggle />
-      </View>
+    <Screen
+      tone="deep"
+      header={false}
+      edges={['top', 'bottom', 'left', 'right']}
+    >
+      <StatusBar style="light" />
 
-      <View style={styles.heroSection}>
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-        <Typography type="h2" align="center" weight="medium">
-          {t('auth.welcome_title')}
-        </Typography>
-        <Typography
-          type="body"
-          color="muted"
-          align="center"
-          style={styles.subtitle}
-        >
-          {t('auth.welcome_subtitle')}
-        </Typography>
-      </View>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.topBar}>
+          <LanguageToggle />
+        </View>
 
-      <View style={styles.features}>
-        {features.map((f) => {
-          const Icon = f.icon;
-          return (
-            <View key={f.title} style={styles.featureItem}>
-              <View
-                style={[styles.iconBox, { backgroundColor: surfaceSecondary }]}
-              >
-                <Icon size={20} color={f.color} strokeWidth={1.5} />
+        <View style={styles.hero}>
+          <VoiceOrb state="idle" size={Math.min(220, Math.round(width * 0.56))} />
+          <Text style={styles.title} accessibilityRole="header">
+            {t('auth.welcome_title')}
+          </Text>
+          <Text style={styles.subtitle}>{t('auth.welcome_subtitle')}</Text>
+        </View>
+
+        <View style={styles.features}>
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <View key={feature.title} style={styles.featureItem}>
+                <View style={styles.featureIcon}>
+                  <Icon size={20} color={OnShader.text} strokeWidth={1.75} />
+                </View>
+                <View style={styles.featureText}>
+                  <Text style={styles.featureTitle}>{feature.title}</Text>
+                  <Text style={styles.featureDesc}>{feature.desc}</Text>
+                </View>
               </View>
-              <View style={styles.featureText}>
-                <Typography type="body-sm" weight="medium">
-                  {f.title}
-                </Typography>
-                <Typography type="body-xs" color="muted">
-                  {f.desc}
-                </Typography>
-              </View>
-            </View>
-          );
-        })}
-      </View>
+            );
+          })}
+        </View>
 
-      <View style={styles.bottomActions}>
-        <Button
-          variant="primary"
-          size="lg"
-          onPress={() => router.push('/(auth)/login')}
-          style={{ alignSelf: 'stretch' }}
-        >
-          <Button.Label>{t('auth.login_button')}</Button.Label>
-        </Button>
-        <Button
-          variant="ghost"
-          size="md"
-          onPress={() => router.replace('/(tabs)/voice')}
-          style={{ alignSelf: 'stretch', marginTop: 8 }}
-        >
-          <Button.Label>
-            {language === 'bn' ? 'হোমে যান' : 'Continue to home'}
-          </Button.Label>
-        </Button>
-      </View>
-    </SafeAreaView>
+        <View style={styles.actions}>
+          <Pressable
+            onPress={() => router.push('/(auth)/login')}
+            accessibilityRole="button"
+            style={({ pressed }) => [
+              styles.primaryBtn,
+              pressed && { opacity: 0.9 },
+            ]}
+          >
+            <Text style={styles.primaryLabel}>{t('auth.login_button')}</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.replace('/(tabs)/voice')}
+            accessibilityRole="button"
+            style={({ pressed }) => [
+              styles.secondaryBtn,
+              pressed && { opacity: 0.7 },
+            ]}
+          >
+            <Text style={styles.secondaryLabel}>
+              {language === 'bn' ? 'হোমে যান' : 'Continue to home'}
+            </Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: Spacing.lg,
+  content: {
+    flexGrow: 1,
     justifyContent: 'space-between',
+    padding: Spacing.lg,
+    gap: Spacing.lg,
   },
   topBar: {
     alignItems: 'flex-end',
   },
-  heroSection: {
+  hero: {
     alignItems: 'center',
-    marginVertical: Spacing.md,
   },
-  logo: {
-    width: 80,
-    height: 80,
-    marginBottom: Spacing.md,
+  title: {
+    color: OnShader.text,
+    fontSize: 28,
+    lineHeight: 36,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginTop: Spacing.sm,
   },
   subtitle: {
+    color: OnShader.muted,
+    fontSize: 16,
+    lineHeight: 24,
+    textAlign: 'center',
     marginTop: Spacing.sm,
-    paddingHorizontal: Spacing.md,
+    maxWidth: 320,
   },
   features: {
+    borderRadius: BorderRadius.xxl,
+    borderWidth: 1,
+    borderColor: OnShader.glassBorder,
+    backgroundColor: OnShader.glass,
+    padding: Spacing.md,
     gap: Spacing.md,
   },
   featureItem: {
@@ -153,18 +163,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: Spacing.md,
   },
-  iconBox: {
+  featureIcon: {
     width: 44,
     height: 44,
-    borderRadius: BorderRadius.md,
+    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: OnShader.glass,
   },
   featureText: {
     flex: 1,
     gap: 2,
   },
-  bottomActions: {
-    marginTop: Spacing.lg,
+  featureTitle: {
+    color: OnShader.text,
+    fontSize: 16,
+    lineHeight: 22,
+    fontWeight: '500',
+  },
+  featureDesc: {
+    color: OnShader.muted,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  actions: {
+    gap: Spacing.sm,
+  },
+  primaryBtn: {
+    minHeight: 56,
+    borderRadius: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: OnShader.solid,
+  },
+  primaryLabel: {
+    color: OnShader.solidForeground,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  secondaryBtn: {
+    minHeight: TouchTargets.min,
+    borderRadius: TouchTargets.min / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  secondaryLabel: {
+    color: OnShader.text,
+    fontSize: 16,
+    fontWeight: '500',
   },
 });

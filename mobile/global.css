@@ -48,13 +48,14 @@
       --field-border: oklch(0.895 0.008 247.9);
 
       /* Semantic Status Tokens */
-      --success: oklch(0.627 0.165 149.2);
+      /* PRD: Trust green #27AE60, Alert red #E74C3C */
+      --success: #27ae60;
       --success-foreground: oklch(0.991 0 0);
 
       --warning: oklch(0.768 0.152 74.5);
       --warning-foreground: oklch(0.185 0.018 252.4);
 
-      --danger: oklch(0.577 0.215 27.3);
+      --danger: #e74c3c;
       --danger-foreground: oklch(0.991 0 0);
 
       --segment: oklch(1 0 0);
@@ -104,13 +105,13 @@
       --field-border: oklch(0.285 0.014 253.8);
 
       /* Semantic Status Tokens */
-      --success: oklch(0.725 0.155 152.4);
+      --success: #2ecc71;
       --success-foreground: oklch(0.155 0.012 255.1);
 
       --warning: oklch(0.81 0.138 76.3);
       --warning-foreground: oklch(0.155 0.012 255.1);
 
-      --danger: oklch(0.635 0.195 25.4);
+      --danger: #e74c3c;
       --danger-foreground: oklch(0.991 0 0);
 
       --segment: oklch(0.268 0.016 253.8);

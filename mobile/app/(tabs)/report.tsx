@@ -21,6 +21,7 @@ import {
   useThemeColor,
 } from 'heroui-native';
 import { Spacing, BorderRadius } from '../../constants/theme';
+import { Screen } from '../../components/common/Screen';
 import { LocationPicker } from '../../components/map/LocationPicker';
 import { useLocation } from '../../hooks/useLocation';
 import { useSettingsStore } from '../../store/settingsStore';
@@ -37,10 +38,10 @@ const CATEGORIES = [
 export default function ReportScreen() {
   const { t } = useTranslation();
   const language = useSettingsStore((s) => s.language);
-  const [background, accent, accentFg] = useThemeColor([
-    'background',
+  const [accent, accentFg, success] = useThemeColor([
     'accent',
     'accent-foreground',
+    'success',
   ]) as string[];
   const { location, refreshLocation, loading: locLoading } = useLocation();
 
@@ -98,22 +99,20 @@ export default function ReportScreen() {
   };
 
   return (
+    <Screen title={t('report.title')}>
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
-      <Typography type="h3" weight="medium">
-        {t('report.title')}
-      </Typography>
-      <Typography type="body-sm" color="muted" style={{ marginTop: 4, marginBottom: Spacing.md }}>
+      <Typography type="body-sm" color="muted" style={{ marginBottom: Spacing.md }}>
         {t('report.subtitle')}
       </Typography>
 
       {submittedTicket ? (
         <HeroAlert status="success" style={{ marginBottom: Spacing.md }}>
           <HeroAlert.Indicator>
-            <Check size={18} color="#16A34A" strokeWidth={1.5} />
+            <Check size={18} color={success} strokeWidth={1.5} />
           </HeroAlert.Indicator>
           <HeroAlert.Content>
             <HeroAlert.Title>
@@ -213,6 +212,7 @@ export default function ReportScreen() {
         <Button.Label>{t('report.submit_report')}</Button.Label>
       </Button>
     </ScrollView>
+    </Screen>
   );
 }
 

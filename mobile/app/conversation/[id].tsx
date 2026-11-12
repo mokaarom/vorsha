@@ -1,25 +1,25 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Typography, Card, useThemeColor } from 'heroui-native';
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { useSettingsStore } from '../../store/settingsStore';
 import { Citation } from '../../components/common/Citation';
+import { Screen } from '../../components/common/Screen';
 import { MessageSquare, Calendar } from 'lucide-react-native';
 import { formatDate } from '../../utils/formatting';
 
 export default function ConversationDetailScreen() {
   const { id } = useLocalSearchParams();
+  const { t } = useTranslation();
   const language = useSettingsStore((s) => s.language);
-  const [background, muted, accent] = useThemeColor([
-    'background',
-    'muted',
-    'accent',
-  ]) as string[];
+  const [muted, accent] = useThemeColor(['muted', 'accent']) as string[];
 
   return (
+    <Screen title={t('nav.conversation')} leading="back">
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
     >
       <Card style={styles.headerCard}>
@@ -57,6 +57,7 @@ export default function ConversationDetailScreen() {
         }}
       />
     </ScrollView>
+    </Screen>
   );
 }
 

@@ -12,6 +12,7 @@ import {
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { useFormStore } from '../../store/formStore';
 import { Button } from '../../components/ui/Button';
+import { Screen } from '../../components/common/Screen';
 import { useSettingsStore } from '../../store/settingsStore';
 import { FileCheck, Download, CheckCircle2 } from 'lucide-react-native';
 
@@ -19,10 +20,10 @@ export default function FormReviewScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const language = useSettingsStore((s) => s.language);
-  const [background, accent, surfaceSecondary] = useThemeColor([
-    'background',
+  const [accent, surfaceSecondary, success] = useThemeColor([
     'accent',
     'surface-secondary',
+    'success',
   ]) as string[];
   const { activeTemplate, formData, resetForm } = useFormStore();
   const [submitted, setSubmitted] = useState(false);
@@ -51,8 +52,13 @@ export default function FormReviewScreen() {
   };
 
   return (
+    <Screen
+      title={t('nav.review')}
+      leading="back"
+      edges={['top', 'bottom', 'left', 'right']}
+    >
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
     >
       <Card style={styles.summaryCard}>
@@ -91,7 +97,7 @@ export default function FormReviewScreen() {
         <View style={styles.successSection}>
           <HeroAlert status="success">
             <HeroAlert.Indicator>
-              <CheckCircle2 size={18} color="#16A34A" strokeWidth={1.5} />
+              <CheckCircle2 size={18} color={success} strokeWidth={1.5} />
             </HeroAlert.Indicator>
             <HeroAlert.Content>
               <HeroAlert.Title>
@@ -137,6 +143,7 @@ export default function FormReviewScreen() {
         </View>
       )}
     </ScrollView>
+    </Screen>
   );
 }
 

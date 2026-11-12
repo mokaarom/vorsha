@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import {
   Typography,
   Card,
@@ -11,15 +12,14 @@ import {
 } from 'heroui-native';
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { Badge } from '../../components/ui/Badge';
+import { Screen } from '../../components/common/Screen';
 import { useSettingsStore } from '../../store/settingsStore';
 
 export default function BillDetailScreen() {
   const { id } = useLocalSearchParams();
+  const { t } = useTranslation();
   const language = useSettingsStore((s) => s.language);
-  const [background, accentSoft] = useThemeColor([
-    'background',
-    'accent-soft',
-  ]) as string[];
+  const accentSoft = useThemeColor('accent-soft') as string;
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState<string | null>(null);
 
@@ -33,9 +33,11 @@ export default function BillDetailScreen() {
   };
 
   return (
+    <Screen title={t('legislation.title')} leading="back">
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
     >
       <Card style={styles.headerCard}>
         <Card.Body style={{ gap: 6 }}>
@@ -100,6 +102,7 @@ export default function BillDetailScreen() {
         </Card.Body>
       </Card>
     </ScrollView>
+    </Screen>
   );
 }
 

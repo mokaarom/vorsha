@@ -6,7 +6,6 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -17,16 +16,15 @@ import {
   Label,
   FieldError,
   InputOTP,
-  useThemeColor,
 } from 'heroui-native';
 import { Spacing } from '../../constants/theme';
+import { Screen } from '../../components/common/Screen';
 import { useAuth } from '../../hooks/useAuth';
 import { validatePhoneNumber } from '../../utils/validation';
 
 export default function LoginScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const background = useThemeColor('background') as string;
 
   const { otpSent, sendOtp, verifyOtp, isLoading } = useAuth();
   const [phone, setPhone] = useState('01712345678');
@@ -49,7 +47,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
+    <Screen
+      leading="back"
+      trailing="none"
+      edges={['top', 'bottom', 'left', 'right']}
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
@@ -118,14 +120,11 @@ export default function LoginScreen() {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     padding: Spacing.lg,
     flexGrow: 1,

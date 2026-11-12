@@ -1,23 +1,29 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Colors } from '../../constants/colors';
-import { useSettingsStore } from '../../store/settingsStore';
-import { Mic, FileText, Camera, BookOpen, User } from 'lucide-react-native';
+import {
+  MessageCircle,
+  FileText,
+  Camera,
+  BookOpen,
+  User,
+} from 'lucide-react-native';
+import { usePalette } from '../../hooks/usePalette';
 
 export default function TabLayout() {
   const { t } = useTranslation();
-  const theme = useSettingsStore((s) => (s.theme === 'dark' ? 'dark' : 'light'));
-  const palette = Colors[theme];
+  const palette = usePalette();
 
   return (
     <Tabs
       screenOptions={{
+        // Each tab renders its own header through <Screen>.
+        headerShown: false,
         tabBarActiveTintColor: palette.accent,
         tabBarInactiveTintColor: palette.muted,
         tabBarStyle: {
-          backgroundColor: palette.surface,
-          borderTopColor: palette.border,
+          backgroundColor: palette.glassStrong,
+          borderTopColor: palette.glassBorder,
           borderTopWidth: 1,
           height: 64,
           paddingBottom: 8,
@@ -27,15 +33,6 @@ export default function TabLayout() {
           fontSize: 11,
           fontWeight: '500',
         },
-        headerStyle: {
-          backgroundColor: palette.surface,
-        },
-        headerTintColor: palette.foreground,
-        headerTitleStyle: {
-          fontWeight: '500',
-          fontSize: 17,
-        },
-        headerShadowVisible: false,
       }}
     >
       <Tabs.Screen
@@ -43,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.voice'),
           tabBarIcon: ({ color, size }) => (
-            <Mic size={size} color={color} strokeWidth={1.5} />
+            <MessageCircle size={size} color={color} strokeWidth={1.75} />
           ),
         }}
       />
@@ -52,7 +49,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.forms'),
           tabBarIcon: ({ color, size }) => (
-            <FileText size={size} color={color} strokeWidth={1.5} />
+            <FileText size={size} color={color} strokeWidth={1.75} />
           ),
         }}
       />
@@ -61,7 +58,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.report'),
           tabBarIcon: ({ color, size }) => (
-            <Camera size={size} color={color} strokeWidth={1.5} />
+            <Camera size={size} color={color} strokeWidth={1.75} />
           ),
         }}
       />
@@ -70,7 +67,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.legislation'),
           tabBarIcon: ({ color, size }) => (
-            <BookOpen size={size} color={color} strokeWidth={1.5} />
+            <BookOpen size={size} color={color} strokeWidth={1.75} />
           ),
         }}
       />
@@ -79,7 +76,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.profile'),
           tabBarIcon: ({ color, size }) => (
-            <User size={size} color={color} strokeWidth={1.5} />
+            <User size={size} color={color} strokeWidth={1.75} />
           ),
         }}
       />

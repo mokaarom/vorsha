@@ -145,7 +145,12 @@ const SurfaceRoot: React.FC<SurfaceProps> = ({
       ? palette.surfaceTertiary
       : variant === 'transparent'
       ? 'transparent'
-      : palette.surface;
+      : palette.glass;
+
+  // The default surface is translucent so the shader background reads through.
+  // It takes a hairline border instead of a shadow: Android elevation shows
+  // through translucent fills.
+  const isGlass = variant === 'default';
 
   return (
     <View
@@ -155,7 +160,7 @@ const SurfaceRoot: React.FC<SurfaceProps> = ({
           borderRadius: BorderRadius.lg,
           padding: Spacing.md,
         },
-        variant !== 'transparent' && Shadows.sm,
+        isGlass && { borderWidth: 1, borderColor: palette.glassBorder },
         style,
       ]}
       {...props}
@@ -638,15 +643,17 @@ export const Input = React.forwardRef<TextInput, InputProps>(
 );
 Input.displayName = 'Input';
 
-export const TextArea = React.forwardRef<TextInput, InputProps>((props, ref) => (
-  <Input
-    ref={ref}
-    multiline
-    textAlignVertical="top"
-    style={[{ minHeight: 96, paddingTop: 12 }, props.style]}
-    {...props}
-  />
-));
+export const TextArea = React.forwardRef<TextInput, InputProps>(
+  ({ style, ...props }, ref) => (
+    <Input
+      ref={ref}
+      multiline
+      textAlignVertical="top"
+      style={[{ minHeight: 96, paddingTop: 12 }, style]}
+      {...props}
+    />
+  ),
+);
 TextArea.displayName = 'TextArea';
 
 export interface TextFieldProps extends ViewProps {

@@ -14,6 +14,7 @@ import {
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { Badge } from '../../components/ui/Badge';
 import { LanguageToggle } from '../../components/common/LanguageToggle';
+import { Screen } from '../../components/common/Screen';
 import { useAuthStore } from '../../store/authStore';
 import { useSettingsStore } from '../../store/settingsStore';
 import { Uniwind } from 'uniwind';
@@ -30,9 +31,8 @@ export default function ProfileScreen() {
   const router = useRouter();
   const { user, isAuthenticated, logout } = useAuthStore();
   const { theme, setTheme, voiceSpeed, setVoiceSpeed, language } = useSettingsStore();
-  const [background, muted, accent, accentFg, surfaceSecondary, border] =
+  const [muted, accent, accentFg, surfaceSecondary, border] =
     useThemeColor([
-      'background',
       'muted',
       'accent',
       'accent-foreground',
@@ -71,8 +71,9 @@ export default function ProfileScreen() {
   };
 
   return (
+    <Screen title={t('profile.title')} trailing="none">
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
     >
@@ -232,6 +233,7 @@ export default function ProfileScreen() {
         </Button>
       </View>
     </ScrollView>
+    </Screen>
   );
 }
 

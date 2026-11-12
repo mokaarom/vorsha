@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,15 +8,14 @@ import {
   TextField,
   Input,
   Label,
-  useThemeColor,
 } from 'heroui-native';
 import { Spacing } from '../../constants/theme';
+import { Screen } from '../../components/common/Screen';
 import { useAuth } from '../../hooks/useAuth';
 
 export default function RegisterScreen() {
   const { t } = useTranslation();
   const router = useRouter();
-  const background = useThemeColor('background') as string;
   const { verifyOtp, isLoading } = useAuth();
 
   const [phone, setPhone] = useState('');
@@ -30,8 +28,15 @@ export default function RegisterScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: background }]}>
-      <ScrollView contentContainerStyle={styles.content}>
+    <Screen
+      leading="back"
+      trailing="none"
+      edges={['top', 'bottom', 'left', 'right']}
+    >
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
         <Typography type="h2" weight="medium">
           {t('auth.register_button')}
         </Typography>
@@ -80,14 +85,11 @@ export default function RegisterScreen() {
           </Button>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   content: {
     padding: Spacing.lg,
     flexGrow: 1,

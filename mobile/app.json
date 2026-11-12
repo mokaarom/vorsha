@@ -7,10 +7,11 @@
     "icon": "./assets/images/icon.png",
     "scheme": "vorosha",
     "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F4F7FA",
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1A5276"
+      "backgroundColor": "#F4F7FA"
     },
     "ios": {
       "supportsTablet": true,
@@ -52,7 +53,11 @@
             "./assets/fonts/Mont-Heavy.otf"
           ]
         }
-      ]
+      ],
+      "expo-splash-screen",
+      "expo-status-bar",
+      "expo-system-ui",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

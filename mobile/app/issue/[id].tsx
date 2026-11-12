@@ -11,6 +11,7 @@ import {
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { Badge } from '../../components/ui/Badge';
 import { MapView } from '../../components/map/MapView';
+import { Screen } from '../../components/common/Screen';
 import { useSettingsStore } from '../../store/settingsStore';
 import { ThumbsUp, Calendar } from 'lucide-react-native';
 
@@ -18,8 +19,7 @@ export default function IssueDetailScreen() {
   const { id } = useLocalSearchParams();
   const { t } = useTranslation();
   const language = useSettingsStore((s) => s.language);
-  const [background, muted, accent, accentFg] = useThemeColor([
-    'background',
+  const [muted, accent, accentFg] = useThemeColor([
     'muted',
     'accent',
     'accent-foreground',
@@ -35,8 +35,9 @@ export default function IssueDetailScreen() {
   };
 
   return (
+    <Screen title={t('nav.issue')} leading="back">
     <ScrollView
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
       contentContainerStyle={styles.content}
     >
       <Card style={styles.card}>
@@ -89,6 +90,7 @@ export default function IssueDetailScreen() {
         </Card.Body>
       </Card>
     </ScrollView>
+    </Screen>
   );
 }
 

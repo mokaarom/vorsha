@@ -11,6 +11,7 @@ import {
 } from 'heroui-native';
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { Badge } from '../../components/ui/Badge';
+import { Screen } from '../../components/common/Screen';
 import { useSettingsStore } from '../../store/settingsStore';
 import { Volume2, ArrowRight } from 'lucide-react-native';
 
@@ -64,10 +65,7 @@ export default function LegislationScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const language = useSettingsStore((s) => s.language);
-  const [background, accent] = useThemeColor([
-    'background',
-    'accent',
-  ]) as string[];
+  const accent = useThemeColor('accent') as string;
 
   const [readingLevel, setReadingLevel] = useState('basic');
   const [search, setSearch] = useState('');
@@ -134,7 +132,7 @@ export default function LegislationScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}>
+    <Screen title={t('legislation.title')}>
       <View style={styles.header}>
         <SearchField value={search} onChange={setSearch}>
           <SearchField.Group>
@@ -174,14 +172,11 @@ export default function LegislationScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     paddingHorizontal: Spacing.md,
     paddingTop: Spacing.sm,

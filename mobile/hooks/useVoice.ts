@@ -1,11 +1,27 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { Audio } from 'expo-av';
+import { useCallback, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
+import { Audio } from 'expo-av';
 import { useVoiceStore } from '../store/voiceStore';
 import { RecordingOptions } from '../utils/audio';
 import { voiceService } from '../services/voice';
 import { policyService } from '../services/policy';
 import { useSettingsStore } from '../store/settingsStore';
+
+async function unloadRecording(recording: Audio.Recording | null) {
+  if (!recording) return;
+  try {
+    const status = await recording.getStatusAsync();
+    if (status.canRecord || status.isRecording) {
+      await recording.stopAndUnloadAsync();
+    }
+  } catch {
+    try {
+      await recording.stopAndUnloadAsync();
+    } catch {
+      // Already unloaded, or web MediaRecorder was never created.
+    }
+  }
+}
 
 export function useVoice() {
   const {
@@ -19,106 +35,143 @@ export function useVoice() {
   } = useVoiceStore();
 
   const language = useSettingsStore((s) => s.language);
-  const [recording, setRecording] = useState<Audio.Recording | null>(null);
-  const [sound, setSound] = useState<Audio.Sound | null>(null);
-  const meterInterval = useRef<any>(null);
+  const recordingRef = useRef<Audio.Recording | null>(null);
+  const soundRef = useRef<Audio.Sound | null>(null);
+  const startingRef = useRef(false);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
-      if (recording) {
-        recording.stopAndUnloadAsync();
-      }
-      if (sound) {
-        sound.unloadAsync();
-      }
-      if (meterInterval.current) {
-        clearInterval(meterInterval.current);
+      mountedRef.current = false;
+      startingRef.current = false;
+      void unloadRecording(recordingRef.current);
+      recordingRef.current = null;
+      if (soundRef.current) {
+        void soundRef.current.unloadAsync();
+        soundRef.current = null;
       }
     };
-  }, [recording, sound]);
+  }, []);
 
   const startRecording = useCallback(async () => {
+    if (startingRef.current || recordingRef.current) {
+      return;
+    }
+    startingRef.current = true;
+
     try {
-      if (sound) {
-        await sound.stopAsync();
+      if (soundRef.current) {
+        await soundRef.current.stopAsync();
+        await soundRef.current.unloadAsync();
+        soundRef.current = null;
       }
 
-      const permission = await Audio.requestPermissionsAsync();
-      if (!permission.granted) {
+      if (
+        Platform.OS === 'web' &&
+        typeof MediaRecorder === 'undefined'
+      ) {
         setState('error');
         return;
       }
 
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
+      const permission = await Audio.requestPermissionsAsync();
+      if (!permission.granted) {
+        if (mountedRef.current) setState('error');
+        return;
+      }
+
+      if (Platform.OS !== 'web') {
+        await Audio.setAudioModeAsync({
+          allowsRecordingIOS: true,
+          playsInSilentModeIOS: true,
+        });
+      }
+
+      // Web's MediaRecorder is created in prepareToRecordAsync and started
+      // in startAsync. createAsync() can race those two if the screen
+      // remounts or the user taps while a start is already in flight.
+      const recording = new Audio.Recording();
+      recordingRef.current = recording;
+      recording.setOnRecordingStatusUpdate((status) => {
+        if (status.metering !== undefined) {
+          setAudioMetering(status.metering);
+        }
       });
+      recording.setProgressUpdateInterval(100);
 
-      const { recording: newRecording } = await Audio.Recording.createAsync(
-        RecordingOptions as any,
-        (status) => {
-          if (status.metering !== undefined) {
-            setAudioMetering(status.metering);
-          }
-        },
-        100
-      );
+      await recording.prepareToRecordAsync(RecordingOptions);
 
-      setRecording(newRecording);
+      if (!mountedRef.current) {
+        await unloadRecording(recording);
+        recordingRef.current = null;
+        return;
+      }
+
+      await recording.startAsync();
+
+      if (!mountedRef.current) {
+        await unloadRecording(recording);
+        recordingRef.current = null;
+        return;
+      }
+
       setState('listening');
       setRealtimeTranscription(language === 'bn' ? 'শুনছি...' : 'Listening...');
     } catch (err) {
       console.error('Failed to start recording', err);
-      setState('error');
+      const leftover = recordingRef.current;
+      recordingRef.current = null;
+      await unloadRecording(leftover);
+      if (mountedRef.current) {
+        setState('error');
+      }
+    } finally {
+      startingRef.current = false;
     }
-  }, [sound, language, setState, setAudioMetering, setRealtimeTranscription]);
+  }, [language, setState, setAudioMetering, setRealtimeTranscription]);
 
   const stopRecording = useCallback(async () => {
-    if (!recording) return;
+    const recording = recordingRef.current;
+    if (!recording || startingRef.current) return;
 
     try {
       setState('processing');
       await recording.stopAndUnloadAsync();
       const uri = recording.getURI();
-      setRecording(null);
+      recordingRef.current = null;
 
       if (!uri) {
-        setState('idle');
+        if (mountedRef.current) setState('idle');
         return;
       }
 
-      // 1. Transcribe audio
       let transcriptText = '';
       try {
         const transcribeResult = await voiceService.transcribeAudio(uri, language);
         transcriptText = transcribeResult.text;
-      } catch (err) {
-        // Fallback for offline or local preview
+      } catch {
         transcriptText =
           language === 'bn'
             ? 'ট্রেড লাইসেন্স করতে কী কী কাগজপত্র প্রয়োজন?'
             : 'What documents are required for a Trade License?';
       }
 
-      // Add user message to conversation
-      const userMessageId = 'user-' + Date.now();
       addMessage({
-        id: userMessageId,
+        id: 'user-' + Date.now(),
         sender: 'user',
         text: transcriptText,
         timestamp: new Date().toISOString(),
       });
 
-      // 2. Query Policy / RAG Engine
       try {
         const policyResponse = await policyService.queryPolicy({
           query: transcriptText,
           language,
         });
 
-        const botMessageId = 'bot-' + Date.now();
         addMessage({
-          id: botMessageId,
+          id: 'bot-' + Date.now(),
           sender: 'assistant',
           text: policyResponse.answer,
           timestamp: new Date().toISOString(),
@@ -128,22 +181,19 @@ export function useVoice() {
 
         setActiveCitations(policyResponse.citations || null);
 
-        // 3. Optional TTS speech
         if (policyResponse.audioUrl) {
-          playAudio(policyResponse.audioUrl);
-        } else {
+          await playAudio(policyResponse.audioUrl);
+        } else if (mountedRef.current) {
           setState('idle');
         }
-      } catch (err) {
-        // Mock ground-truth fallback answer for instant UI preview
+      } catch {
         const fallbackTextBn =
           'স্থানীয় সরকার (সিটি কর্পোরেশন) আইন ২০০৯ অনুযায়ী নতুন ট্রেড লাইসেন্সের জন্য প্রয়োজন: ১. আবেদন ফরম, ২. জাতীয় পরিচয়পত্র (NID) কপি, ৩. ব্যবসা প্রতিষ্ঠানের ভাড়ার চুক্তিপত্র বা মালিকানার দলিল, এবং ৪. তিন কপি পাসপোর্ট সাইজ ছবি। সাধারণ ট্রেড লাইসেন্স ফি ৫০০-২০০০ টাকা।';
         const fallbackTextEn =
           'According to the Local Government (City Corporation) Act 2009, required documents for a Trade License are: 1. Application form, 2. National ID (NID) copy, 3. Rental agreement or holding tax receipt, and 4. Three passport-size photos.';
 
-        const botMessageId = 'bot-' + Date.now();
         addMessage({
-          id: botMessageId,
+          id: 'bot-' + Date.now(),
           sender: 'assistant',
           text: language === 'bn' ? fallbackTextBn : fallbackTextEn,
           timestamp: new Date().toISOString(),
@@ -160,40 +210,42 @@ export function useVoice() {
           confidenceScore: 0.96,
         });
 
-        setState('idle');
+        if (mountedRef.current) setState('idle');
       }
     } catch (err) {
       console.error('Voice query error', err);
-      setState('error');
+      recordingRef.current = null;
+      if (mountedRef.current) setState('error');
     }
-  }, [recording, language, setState, addMessage, setActiveCitations]);
+  }, [language, setState, addMessage, setActiveCitations]);
 
   const playAudio = async (url: string) => {
     try {
       setState('speaking');
-      const { sound: newSound } = await Audio.Sound.createAsync(
+      const { sound } = await Audio.Sound.createAsync(
         { uri: url },
-        { shouldPlay: true }
+        { shouldPlay: true },
       );
-      setSound(newSound);
-      newSound.setOnPlaybackStatusUpdate((status) => {
+      soundRef.current = sound;
+      sound.setOnPlaybackStatusUpdate((status) => {
         if (status.isLoaded && status.didJustFinish) {
-          setState('idle');
+          if (mountedRef.current) setState('idle');
         }
       });
     } catch (err) {
       console.error('Audio playback error', err);
-      setState('idle');
+      if (mountedRef.current) setState('idle');
     }
   };
 
-  const toggleRecording = () => {
+  const toggleRecording = useCallback(() => {
+    if (startingRef.current) return;
     if (state === 'listening') {
-      stopRecording();
-    } else {
-      startRecording();
+      void stopRecording();
+    } else if (state === 'idle' || state === 'error') {
+      void startRecording();
     }
-  };
+  }, [state, startRecording, stopRecording]);
 
   return {
     state,

@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { Typography, useThemeColor } from 'heroui-native';
+import { Typography } from 'heroui-native';
 import { Spacing } from '../../constants/theme';
+import { Screen } from '../../components/common/Screen';
 import { useFormStore, FormTemplate, FormFieldDefinition } from '../../store/formStore';
 import { FormField } from '../../components/forms/FormField';
 import { ProgressBar } from '../../components/forms/ProgressBar';
@@ -22,7 +23,6 @@ export default function FormFillingScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const language = useSettingsStore((s) => s.language);
-  const background = useThemeColor('background') as string;
 
   const {
     activeTemplate,
@@ -176,9 +176,14 @@ export default function FormFillingScreen() {
   };
 
   return (
+    <Screen
+      title={t('forms.title')}
+      leading="back"
+      edges={['top', 'bottom', 'left', 'right']}
+    >
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      style={[styles.container, { backgroundColor: background }]}
+      style={styles.container}
     >
       <ScrollView contentContainerStyle={styles.content}>
         <Typography type="h4" weight="medium">
@@ -229,6 +234,7 @@ export default function FormFillingScreen() {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
+    </Screen>
   );
 }
 

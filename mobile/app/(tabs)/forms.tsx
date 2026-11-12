@@ -10,6 +10,7 @@ import {
 } from 'heroui-native';
 import { Spacing, BorderRadius } from '../../constants/theme';
 import { Badge } from '../../components/ui/Badge';
+import { Screen } from '../../components/common/Screen';
 import { useSettingsStore } from '../../store/settingsStore';
 import { FileText, ArrowRight, Clock, Building2 } from 'lucide-react-native';
 
@@ -66,8 +67,7 @@ export default function FormsScreen() {
   const { t } = useTranslation();
   const router = useRouter();
   const language = useSettingsStore((s) => s.language);
-  const [background, surfaceSecondary, muted, accent] = useThemeColor([
-    'background',
+  const [surfaceSecondary, muted, accent] = useThemeColor([
     'surface-secondary',
     'muted',
     'accent',
@@ -136,7 +136,7 @@ export default function FormsScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}>
+    <Screen title={t('forms.title')}>
       <View style={styles.searchHeader}>
         <SearchField value={search} onChange={setSearch}>
           <SearchField.Group>
@@ -154,14 +154,11 @@ export default function FormsScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   searchHeader: {
     paddingHorizontal: Spacing.md,
     paddingTop: Spacing.sm,
