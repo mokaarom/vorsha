@@ -599,7 +599,7 @@ export interface InputProps extends TextInputProps {
   isDisabled?: boolean;
 }
 
-export const Input = React.forwardRef<TextInput, InputProps>(
+export const Input = React.forwardRef<any, InputProps>(
   (
     {
       style,
@@ -994,7 +994,7 @@ const InputOTPRoot: React.FC<{
   const [internal, setInternal] = useState(defaultValue);
   const [focused, setFocused] = useState(false);
   const value = controlled ?? internal;
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<any>(null);
   const palette = usePalette();
 
   const setValue = (next: string) => {
@@ -1351,7 +1351,7 @@ const AvatarImage: React.FC<{
       source={source}
       onLoad={() => setStatus('loaded')}
       onError={() => setStatus('error')}
-      style={StyleSheet.absoluteFillObject}
+      style={StyleSheet.absoluteFill}
     />
   );
 };
@@ -1377,7 +1377,11 @@ const AvatarFallback: React.FC<
     <View
       style={[
         {
-          ...StyleSheet.absoluteFillObject,
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
           alignItems: 'center',
           justifyContent: 'center',
           backgroundColor: bg,
@@ -1687,7 +1691,7 @@ const TabsTrigger: React.FC<
   const isSelected = active === value;
   const content =
     typeof children === 'function'
-      ? children({ isSelected, value, isDisabled: !!isDisabled })
+      ? (children as any)({ isSelected, value, isDisabled: !!isDisabled })
       : children;
 
   return (

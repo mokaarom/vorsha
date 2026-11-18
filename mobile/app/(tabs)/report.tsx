@@ -170,7 +170,6 @@ export default function ReportScreen() {
               variant={isSelected ? 'primary' : 'soft'}
               color={isSelected ? 'accent' : 'default'}
               onPress={() => setSelectedCategory(cat.id)}
-              animation="disable-all"
             >
               <Chip.Label>
                 {language === 'bn' ? cat.labelBn : cat.labelEn}

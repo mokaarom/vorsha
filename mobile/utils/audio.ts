@@ -1,6 +1,12 @@
-import { Audio } from 'expo-av';
 import { Platform } from 'react-native';
 import { Config } from '../constants/config';
+
+// Expo AV numeric constants defined directly so loading this module
+// never triggers requireNativeModule('ExponentAV') in environments where
+// the native binary is unlinked (such as Expo Go or Web).
+const ANDROID_OUTPUT_FORMAT_MPEG_4 = 2;
+const ANDROID_AUDIO_ENCODER_AAC = 3;
+const IOS_AUDIO_QUALITY_HIGH = 96;
 
 const WEB_MIME_TYPES = [
   'audio/webm;codecs=opus',
@@ -24,15 +30,15 @@ export const RecordingOptions = {
   isMeteringEnabled: true,
   android: {
     extension: '.m4a',
-    outputFormat: Audio.AndroidOutputFormat.MPEG_4,
-    audioEncoder: Audio.AndroidAudioEncoder.AAC,
+    outputFormat: ANDROID_OUTPUT_FORMAT_MPEG_4,
+    audioEncoder: ANDROID_AUDIO_ENCODER_AAC,
     sampleRate: Config.AUDIO.SAMPLE_RATE,
     numberOfChannels: Config.AUDIO.CHANNELS,
     bitRate: Config.AUDIO.BIT_RATE,
   },
   ios: {
     extension: '.m4a',
-    audioQuality: Audio.IOSAudioQuality.HIGH,
+    audioQuality: IOS_AUDIO_QUALITY_HIGH,
     sampleRate: Config.AUDIO.SAMPLE_RATE,
     numberOfChannels: Config.AUDIO.CHANNELS,
     bitRate: Config.AUDIO.BIT_RATE,

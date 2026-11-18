@@ -36,7 +36,6 @@ export const Badge: React.FC<BadgeProps> = ({
       variant="soft"
       color={mapColor(variant)}
       style={style}
-      animation="disable-all"
     >
       <Chip.Label>{label}</Chip.Label>
     </Chip>

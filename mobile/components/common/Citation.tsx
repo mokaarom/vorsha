@@ -37,7 +37,7 @@ export const Citation: React.FC<CitationProps> = ({ citation, onPress }) => {
           {citation.section ? ` · ${citation.section}` : ''}
         </Typography>
         <View style={styles.footer}>
-          <Chip size="sm" variant="soft" color="success" animation="disable-all">
+          <Chip size="sm" variant="soft" color="success">
             <Chip.Label>
               {language === 'bn'
                 ? `${displayConfidence}% নির্ভুল`

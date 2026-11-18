@@ -42,47 +42,48 @@ export function ShaderBackground({
           fov={45}
         >
           <ShaderGradient
-            animate="on"
-            axesHelper="off"
-            bgColor1={ShaderColors.bg1}
-            bgColor2={ShaderColors.bg2}
-            brightness={1.2}
-            cAzimuthAngle={170}
-            cDistance={4.4}
-            cPolarAngle={70}
-            cameraZoom={1}
-            color1={ShaderColors.color1}
-            color2={ShaderColors.color2}
-            color3={ShaderColors.color3}
-            destination="onCanvas"
-            embedMode="off"
-            envPreset="city"
-            format="gif"
-            fov={45}
-            frameRate={10}
-            gizmoHelper="hide"
-            grain="off"
-            lightType="3d"
-            pixelDensity={1}
-            positionX={0}
-            positionY={0.9}
-            positionZ={-0.3}
-            range="disabled"
-            rangeEnd={40}
-            rangeStart={0}
-            reflection={0.1}
-            rotationX={45}
-            rotationY={0}
-            rotationZ={0}
-            shader="defaults"
-            type="waterPlane"
-            uAmplitude={0}
-            uDensity={1.2}
-            uFrequency={0}
-            uSpeed={0.2}
-            uStrength={3.4}
-            uTime={0}
-            wireframe={false}
+            {...({
+              animate: "on",
+              bgColor1: ShaderColors.bg1,
+              bgColor2: ShaderColors.bg2,
+              brightness: 1.2,
+              cAzimuthAngle: 170,
+              cDistance: 4.4,
+              cPolarAngle: 70,
+              cameraZoom: 1,
+              color1: ShaderColors.color1,
+              color2: ShaderColors.color2,
+              color3: ShaderColors.color3,
+              destination: "onCanvas",
+              embedMode: "off",
+              envPreset: "city",
+              format: "gif",
+              fov: 45,
+              frameRate: 10,
+              gizmoHelper: "hide",
+              grain: "off",
+              lightType: "3d",
+              pixelDensity: 1,
+              positionX: 0,
+              positionY: 0.9,
+              positionZ: -0.3,
+              range: "disabled",
+              rangeEnd: 40,
+              rangeStart: 0,
+              reflection: 0.1,
+              rotationX: 45,
+              rotationY: 0,
+              rotationZ: 0,
+              shader: "defaults",
+              type: "waterPlane",
+              uAmplitude: 0,
+              uDensity: 1.2,
+              uFrequency: 0,
+              uSpeed: 0.2,
+              uStrength: 3.4,
+              uTime: 0,
+              wireframe: false,
+            } as any)}
           />
         </ShaderGradientCanvas>
       ) : null}
@@ -101,7 +102,11 @@ const canvasStyle = {
 
 const styles = StyleSheet.create({
   root: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     zIndex: 0,
     overflow: 'hidden',
   },
