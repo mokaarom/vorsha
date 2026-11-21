@@ -1,2 +1,7 @@
 # Others
 /others
+
+# Build and dependencies
+/node_modules
+/.next
+/out
